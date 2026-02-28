@@ -1,0 +1,36 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/budget_db?socketTimeout=5
+    username: postgres
+    password: postgres
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  flyway:
+    user: postgres
+    password: postgres
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8082/realms/budget-dev
+
+logging:
+  level:
+    #root: DEBUG
+    com.iamflubin.budget: debug
+    org.hibernate.SQL: debug
+    org.hibernate.orm.jdbc.bind: trace
+    org.springframework.security: debug
+    #org.springframework: DEBUG
+    org.springframework:
+      orm.jpa: debug
+      transaction.interceptor: debug
+
+app:
+  security:
+    cors:
+      allowed-origins:
+        - "http://localhost:4200"

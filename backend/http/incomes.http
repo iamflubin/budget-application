@@ -1,0 +1,26 @@
+### Save incomes
+POST {{apiBaseUrl}}/v1/incomes
+Content-Type: application/json
+
+{
+  "name": "Freelance",
+  "amount": 2000,
+  "date": "2023-07-15"
+}
+
+### Get all incomes
+GET {{apiBaseUrl}}/v1/incomes?sort=name,asc&page=0&size=2&from=2023-06-01
+Accept: application/json
+
+### Update income
+PUT {{apiBaseUrl}}/v1/incomes/cdb574b3-c4cc-4006-b4f9-710ce1a5038d
+Content-Type: application/json
+
+{
+  "name": "Freelance",
+  "amount": 2100,
+  "date": "2023-07-15"
+}
+
+### Delete income
+DELETE {{apiBaseUrl}}/v1/incomes/cdb574b3-c4cc-4006-b4f9-710ce1a5038d

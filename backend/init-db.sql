@@ -1,0 +1,2 @@
+CREATE DATABASE budget_db;
+CREATE DATABASE keycloak_db;
