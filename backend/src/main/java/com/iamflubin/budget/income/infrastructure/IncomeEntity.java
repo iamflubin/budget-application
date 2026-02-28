@@ -1,10 +1,10 @@
 package com.iamflubin.budget.income.infrastructure;
 
 import com.iamflubin.budget.income.domain.Income;
-import com.iamflubin.budget.shared.infrastructure.BaseEntity;
 import com.iamflubin.budget.shared.domain.Money;
 import com.iamflubin.budget.shared.domain.TransactionId;
 import com.iamflubin.budget.shared.domain.TransactionName;
+import com.iamflubin.budget.shared.infrastructure.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -44,7 +44,7 @@ class IncomeEntity extends BaseEntity {
 
     public Income toDomain() {
         return Income.of(
-                TransactionId.of(getId()),
+                TransactionId.of(id),
                 TransactionName.of(name),
                 Money.of(amount),
                 date

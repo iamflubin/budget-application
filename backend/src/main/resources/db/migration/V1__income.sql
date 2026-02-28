@@ -21,9 +21,9 @@ CREATE TABLE IF NOT EXISTS income
     updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
 
-CREATE INDEX idx_income_lower_name_trgm ON income USING gin (LOWER(name) gin_trgm_ops);
+CREATE INDEX IF NOT EXISTS idx_income_lower_name_trgm ON income USING gin (LOWER(name) gin_trgm_ops);
 
-CREATE INDEX idx_income_date_desc ON income (date DESC);
+CREATE INDEX IF NOT EXISTS idx_income_date ON income (date);
 
 DROP TRIGGER IF EXISTS update_incomeupdated_at ON income;
 

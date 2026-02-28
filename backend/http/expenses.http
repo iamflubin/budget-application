@@ -1,0 +1,28 @@
+### Save expenses
+POST {{apiBaseUrl}}/v1/expenses
+Content-Type: application/json
+
+{
+  "name": "Foods",
+  "amount": 1256.67,
+  "date": "2023-07-15",
+  "category": "NEEDS"
+}
+
+### Get all expenses
+GET {{apiBaseUrl}}/v1/expenses?sort=name,asc&page=0&size=2&from=2023-06-01&category=NEEDS
+Accept: application/json
+
+### Update expense
+PUT {{apiBaseUrl}}/v1/expenses/ac94ba6c-076b-4b15-8007-bd28bac0fcdd
+Content-Type: application/json
+
+{
+  "name": "Foods",
+  "amount": 2100,
+  "date": "2023-07-15",
+  "category": "NEEDS"
+}
+
+### Delete expense
+DELETE {{apiBaseUrl}}/v1/expenses/ac94ba6c-076b-4b15-8007-bd28bac0fcdd

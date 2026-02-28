@@ -18,7 +18,7 @@ import java.util.UUID;
 @ToString
 public abstract class BaseEntity {
     @Id
-    private UUID id;
+    protected UUID id;
 
     @Version
     @Column(nullable = false)
