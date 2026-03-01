@@ -4,6 +4,7 @@ import com.iamflubin.budget.expense.domain.ExpenseCategory;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 final class ExpenseSpecifications {
 
@@ -49,4 +50,8 @@ final class ExpenseSpecifications {
         };
     }
 
+    public static Specification<ExpenseEntity> withUserId(final UUID userId) {
+        return (root, query, cb) ->
+                userId == null ? cb.conjunction() : cb.equal(root.get("userId"), userId);
+    }
 }

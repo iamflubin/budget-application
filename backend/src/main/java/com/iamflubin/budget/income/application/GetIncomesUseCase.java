@@ -1,5 +1,6 @@
 package com.iamflubin.budget.income.application;
 
+import com.iamflubin.budget.auth.CurrentUserProvider;
 import com.iamflubin.budget.income.application.spi.IncomeReadService;
 import com.iamflubin.budget.income.domain.Income;
 import com.iamflubin.budget.shared.domain.Page;
@@ -19,11 +20,13 @@ import java.time.LocalDate;
 @Slf4j
 public class GetIncomesUseCase {
     private final IncomeReadService readService;
+    private final CurrentUserProvider userProvider;
 
     public Page<Income> execute(final int page, final int size,
                                 final String name, final LocalDate from,
                                 final LocalDate to, final String direction, final String... sort) {
         PaginationUtils.validate(page, size);
-        return readService.getIncomes(page, size, name, from, to, direction, sort);
+        return readService.getIncomes(page, size, name, from, to, userProvider.getCurrentUser().id(),
+                direction, sort);
     }
 }

@@ -1,5 +1,6 @@
 package com.iamflubin.budget.income.application;
 
+import com.iamflubin.budget.auth.CurrentUserProvider;
 import com.iamflubin.budget.income.application.command.UpdateIncomeCommand;
 import com.iamflubin.budget.income.domain.Income;
 import com.iamflubin.budget.income.domain.IncomeRepository;
@@ -20,11 +21,13 @@ import org.springframework.validation.annotation.Validated;
 @Slf4j
 public class UpdateIncomeUseCase {
     private final IncomeRepository repository;
+    private final CurrentUserProvider userProvider;
 
     public void execute(final @NonNull @Valid UpdateIncomeCommand command) {
-        final Income income = repository.findById(command.id()).orElseThrow(
-                () -> new IncomeNotFoundException(command.id())
-        );
+        final Income income = repository.findByIdAndUserId(command.id(), userProvider.getCurrentUser().id())
+                .orElseThrow(
+                        () -> new IncomeNotFoundException(command.id())
+                );
         income.update(TransactionName.of(command.name()), Money.of(command.amount()),
                 command.date()
         );

@@ -1,5 +1,6 @@
 package com.iamflubin.budget.income.application;
 
+import com.iamflubin.budget.auth.CurrentUserProvider;
 import com.iamflubin.budget.income.application.command.SaveIncomeCommand;
 import com.iamflubin.budget.income.domain.Income;
 import com.iamflubin.budget.income.domain.IncomeRepository;
@@ -22,9 +23,11 @@ import java.util.UUID;
 @Slf4j
 public class SaveIncomeUseCase {
     private final IncomeRepository repository;
+    private final CurrentUserProvider userProvider;
 
     public UUID execute(final @NonNull @Valid SaveIncomeCommand command) {
         final var income = Income.of(
+                userProvider.getCurrentUser().id(),
                 TransactionName.of(command.name()),
                 Money.of(command.amount()),
                 command.date()

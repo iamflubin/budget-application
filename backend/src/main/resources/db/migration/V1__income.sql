@@ -17,13 +17,17 @@ CREATE TABLE IF NOT EXISTS income
     name       VARCHAR(255)             NOT NULL CHECK (btrim(name) <> ''),
     amount     DECIMAL(12, 2)           NOT NULL CHECK (amount > 0),
     date       DATE                     NOT NULL,
+    user_id    UUID                     NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
 
+CREATE INDEX idx_income_user_id ON income (user_id);
+
 CREATE INDEX IF NOT EXISTS idx_income_lower_name_trgm ON income USING gin (LOWER(name) gin_trgm_ops);
 
-CREATE INDEX IF NOT EXISTS idx_income_date ON income (date);
+CREATE INDEX IF NOT EXISTS idx_income_user_date
+    ON income (user_id, date);
 
 DROP TRIGGER IF EXISTS update_incomeupdated_at ON income;
 

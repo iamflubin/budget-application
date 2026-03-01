@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -22,7 +23,7 @@ class IncomeSpringDataReadService implements IncomeReadService {
     @Override
     public Page<Income> getIncomes(int page, int size, String name,
                                    LocalDate from, LocalDate to,
-                                   String direction, String... sort) {
+                                   UUID userId, String direction, String... sort) {
         Sort sortObj = Sort.unsorted();
 
         if (sort != null && sort.length > 0) {
@@ -36,7 +37,8 @@ class IncomeSpringDataReadService implements IncomeReadService {
 
         final Pageable pageable = PageRequest.of(page, size, sortObj);
 
-        final Specification<IncomeEntity> spec = IncomeSpecifications.containsNameIgnoreCase(name)
+        final Specification<IncomeEntity> spec = IncomeSpecifications.withUserId(userId)
+                .and(IncomeSpecifications.containsNameIgnoreCase(name))
                 .and(IncomeSpecifications.betweenDates(from, to));
 
         final org.springframework.data.domain.Page<Income> pageResult = repository
@@ -54,9 +56,11 @@ class IncomeSpringDataReadService implements IncomeReadService {
     }
 
     @Override
-    public List<Income> getIncomes(LocalDate from, LocalDate to) {
+    public List<Income> getIncomes(LocalDate from, LocalDate to, UUID userId) {
+        final Specification<IncomeEntity> spec = IncomeSpecifications.withUserId(userId)
+                .and(IncomeSpecifications.betweenDates(from, to));
         return repository
-                .findAll(IncomeSpecifications.betweenDates(from, to))
+                .findAll(spec)
                 .stream()
                 .map(IncomeEntity::toDomain)
                 .toList();

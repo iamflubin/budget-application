@@ -14,6 +14,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 @Table(name = "income")
@@ -31,11 +32,14 @@ class IncomeEntity extends BaseEntity {
     private BigDecimal amount;
     @Column(nullable = false)
     private LocalDate date;
+    @Column(nullable = false)
+    private UUID userId;
 
 
     public static IncomeEntity from(final Income income) {
         final var entity = new IncomeEntity();
         entity.setId(income.getId().value());
+        entity.setUserId(income.getUserId());
         entity.setName(income.getName().value());
         entity.setAmount(income.getAmount().toBigDecimal());
         entity.setDate(income.getDate());
@@ -45,6 +49,7 @@ class IncomeEntity extends BaseEntity {
     public Income toDomain() {
         return Income.of(
                 TransactionId.of(id),
+                userId,
                 TransactionName.of(name),
                 Money.of(amount),
                 date

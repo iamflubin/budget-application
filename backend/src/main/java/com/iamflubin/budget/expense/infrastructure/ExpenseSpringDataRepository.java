@@ -25,8 +25,8 @@ class ExpenseSpringDataRepository implements ExpenseRepository {
     }
 
     @Override
-    public Optional<Expense> findById(UUID id) {
-        final Optional<ExpenseEntity> entity = repository.findById(id);
+    public Optional<Expense> findByIdAndUserId(UUID id, UUID userId) {
+        final Optional<ExpenseEntity> entity = repository.findByIdAndUserId(id, userId);
         return entity.map(ExpenseEntity::toDomain);
     }
 

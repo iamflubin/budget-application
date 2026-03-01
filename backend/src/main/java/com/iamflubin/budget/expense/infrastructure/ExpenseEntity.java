@@ -13,6 +13,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 @Table(name = "expense")
@@ -33,10 +34,13 @@ class ExpenseEntity extends BaseEntity {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private ExpenseCategory category;
+    @Column(nullable = false)
+    private UUID userId;
 
     public static ExpenseEntity from(final Expense expense) {
         final ExpenseEntity expenseEntity = new ExpenseEntity();
         expenseEntity.setId(expense.getId().value());
+        expenseEntity.setUserId(expense.getUserId());
         expenseEntity.setName(expense.getName().value());
         expenseEntity.setAmount(expense.getAmount().toBigDecimal());
         expenseEntity.setDate(expense.getDate());
@@ -47,6 +51,7 @@ class ExpenseEntity extends BaseEntity {
     public Expense toDomain() {
         return Expense.of(
                 TransactionId.of(id),
+                userId,
                 TransactionName.of(name),
                 Money.of(amount),
                 date,

@@ -3,6 +3,7 @@ package com.iamflubin.budget.income.infrastructure;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 final class IncomeSpecifications {
 
@@ -38,6 +39,11 @@ final class IncomeSpecifications {
             }
             return cb.lessThanOrEqualTo(path, to);
         };
+    }
+
+    public static Specification<IncomeEntity> withUserId(final UUID userId) {
+        return (root, query, cb) ->
+                userId == null ? cb.conjunction() : cb.equal(root.get("userId"), userId);
     }
 
 }

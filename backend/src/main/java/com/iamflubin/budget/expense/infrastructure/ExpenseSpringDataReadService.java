@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -22,7 +23,7 @@ class ExpenseSpringDataReadService implements ExpenseReadService {
 
     @Override
     public Page<Expense> getExpenses(int page, int size, String name, ExpenseCategory category, LocalDate from,
-                                     LocalDate to, String direction, String... sort) {
+                                     LocalDate to, UUID userId, String direction, String... sort) {
         Sort sortObj = Sort.unsorted();
 
         if (sort != null && sort.length > 0) {
@@ -36,7 +37,8 @@ class ExpenseSpringDataReadService implements ExpenseReadService {
 
         final Pageable pageable = PageRequest.of(page, size, sortObj);
 
-        final Specification<ExpenseEntity> spec = ExpenseSpecifications.containsNameIgnoreCase(name)
+        final Specification<ExpenseEntity> spec = ExpenseSpecifications.withUserId(userId)
+                .and(ExpenseSpecifications.containsNameIgnoreCase(name))
                 .and(ExpenseSpecifications.betweenDates(from, to))
                 .and(ExpenseSpecifications.byCategory(category));
 
@@ -55,9 +57,11 @@ class ExpenseSpringDataReadService implements ExpenseReadService {
     }
 
     @Override
-    public List<Expense> getExpenses(LocalDate from, LocalDate to) {
+    public List<Expense> getExpenses(LocalDate from, LocalDate to, UUID userId) {
+        final Specification<ExpenseEntity> spec = ExpenseSpecifications.withUserId(userId)
+                .and(ExpenseSpecifications.betweenDates(from, to));
         return repository
-                .findAll(ExpenseSpecifications.betweenDates(from, to))
+                .findAll(spec)
                 .stream()
                 .map(ExpenseEntity::toDomain)
                 .toList();

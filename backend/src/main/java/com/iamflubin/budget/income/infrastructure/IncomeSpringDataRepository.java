@@ -24,10 +24,9 @@ class IncomeSpringDataRepository implements IncomeRepository {
         repository.save(entity);
     }
 
-
     @Override
-    public Optional<Income> findById(UUID id) {
-        final Optional<IncomeEntity> entity = repository.findById(id);
+    public Optional<Income> findByIdAndUserId(UUID id, UUID userId) {
+        final Optional<IncomeEntity> entity = repository.findByIdAndUserId(id, userId);
         return entity.map(IncomeEntity::toDomain);
     }
 

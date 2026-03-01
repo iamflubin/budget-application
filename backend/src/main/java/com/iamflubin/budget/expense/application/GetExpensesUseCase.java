@@ -1,5 +1,6 @@
 package com.iamflubin.budget.expense.application;
 
+import com.iamflubin.budget.auth.CurrentUserProvider;
 import com.iamflubin.budget.expense.application.spi.ExpenseReadService;
 import com.iamflubin.budget.expense.domain.Expense;
 import com.iamflubin.budget.expense.domain.ExpenseCategory;
@@ -20,12 +21,14 @@ import java.time.LocalDate;
 @Slf4j
 public class GetExpensesUseCase {
     private final ExpenseReadService readService;
+    private final CurrentUserProvider userProvider;
 
     public Page<Expense> execute(final int page, final int size,
                                  final String name, final ExpenseCategory category,
                                  final LocalDate from,
                                  final LocalDate to, final String direction, final String... sort) {
         PaginationUtils.validate(page, size);
-        return readService.getExpenses(page, size, name, category, from, to, direction, sort);
+        return readService.getExpenses(page, size, name, category, from, to, userProvider.getCurrentUser().id(),
+                direction, sort);
     }
 }

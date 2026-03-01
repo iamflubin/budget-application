@@ -5,8 +5,8 @@ import java.util.UUID;
 
 public interface ExpenseRepository {
     void save(Expense expense);
-
-    Optional<Expense> findById(UUID id);
+    
+    Optional<Expense> findByIdAndUserId(UUID id, UUID userId);
 
     void delete(Expense expense);
 }

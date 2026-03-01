@@ -1,6 +1,7 @@
 ### Save incomes
 POST {{apiBaseUrl}}/v1/incomes
 Content-Type: application/json
+Authorization: Bearer {{accessToken}}
 
 {
   "name": "Freelance",
@@ -11,10 +12,12 @@ Content-Type: application/json
 ### Get all incomes
 GET {{apiBaseUrl}}/v1/incomes?sort=name,asc&page=0&size=2&from=2023-06-01
 Accept: application/json
+Authorization: Bearer {{accessToken}}
 
 ### Update income
 PUT {{apiBaseUrl}}/v1/incomes/cdb574b3-c4cc-4006-b4f9-710ce1a5038d
 Content-Type: application/json
+Authorization: Bearer {{accessToken}}
 
 {
   "name": "Freelance",
@@ -24,3 +27,4 @@ Content-Type: application/json
 
 ### Delete income
 DELETE {{apiBaseUrl}}/v1/incomes/cdb574b3-c4cc-4006-b4f9-710ce1a5038d
+Authorization: Bearer {{accessToken}}

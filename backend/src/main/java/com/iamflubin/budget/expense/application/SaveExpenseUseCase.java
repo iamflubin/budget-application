@@ -1,5 +1,6 @@
 package com.iamflubin.budget.expense.application;
 
+import com.iamflubin.budget.auth.CurrentUserProvider;
 import com.iamflubin.budget.expense.application.command.SaveExpenseCommand;
 import com.iamflubin.budget.expense.domain.Expense;
 import com.iamflubin.budget.expense.domain.ExpenseRepository;
@@ -22,9 +23,11 @@ import java.util.UUID;
 @Slf4j
 public class SaveExpenseUseCase {
     private final ExpenseRepository expenseRepository;
+    private final CurrentUserProvider currentUserProvider;
 
     public UUID execute(final @NonNull @Valid SaveExpenseCommand command) {
         final var expense = Expense.of(
+                currentUserProvider.getCurrentUser().id(),
                 TransactionName.of(command.name()),
                 Money.of(command.amount()),
                 command.date(),

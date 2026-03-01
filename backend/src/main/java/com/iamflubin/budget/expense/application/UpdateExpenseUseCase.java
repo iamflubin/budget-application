@@ -1,5 +1,6 @@
 package com.iamflubin.budget.expense.application;
 
+import com.iamflubin.budget.auth.CurrentUserProvider;
 import com.iamflubin.budget.expense.application.command.UpdateExpenseCommand;
 import com.iamflubin.budget.expense.domain.Expense;
 import com.iamflubin.budget.expense.domain.ExpenseRepository;
@@ -20,9 +21,11 @@ import org.springframework.validation.annotation.Validated;
 @Slf4j
 public class UpdateExpenseUseCase {
     private final ExpenseRepository repository;
+    private final CurrentUserProvider currentUserProvider;
 
     public void execute(final @NonNull @Valid UpdateExpenseCommand command) {
-        final Expense expense = repository.findById(command.id()).orElseThrow(
+        final Expense expense = repository.findByIdAndUserId(command.id(),
+                currentUserProvider.getCurrentUser().id()).orElseThrow(
                 () -> new ExpenseNotFoundException(command.id())
         );
         expense.update(TransactionName.of(command.name()), Money.of(command.amount()),
