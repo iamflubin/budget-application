@@ -1,9 +1,6 @@
 package com.iamflubin.budget.income.api;
 
-import com.iamflubin.budget.income.application.DeleteIncomeUseCase;
-import com.iamflubin.budget.income.application.GetIncomesUseCase;
-import com.iamflubin.budget.income.application.SaveIncomeUseCase;
-import com.iamflubin.budget.income.application.UpdateIncomeUseCase;
+import com.iamflubin.budget.income.application.*;
 import com.iamflubin.budget.income.application.command.SaveIncomeCommand;
 import com.iamflubin.budget.shared.domain.Page;
 import jakarta.validation.Valid;

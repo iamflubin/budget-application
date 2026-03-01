@@ -1,0 +1,3 @@
+### Get budget
+GET {{apiBaseUrl}}/v1/budget/analytics?from=2023-07-15&to=2024-12-31&needs=0.5&wants=0.3&savings=0.2
+Accept: application/json

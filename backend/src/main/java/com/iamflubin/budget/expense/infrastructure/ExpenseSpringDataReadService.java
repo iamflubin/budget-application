@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -51,5 +52,14 @@ class ExpenseSpringDataReadService implements ExpenseReadService {
                 pageResult.isLast(),
                 pageResult.getContent()
         );
+    }
+
+    @Override
+    public List<Expense> getExpenses(LocalDate from, LocalDate to) {
+        return repository
+                .findAll(ExpenseSpecifications.betweenDates(from, to))
+                .stream()
+                .map(ExpenseEntity::toDomain)
+                .toList();
     }
 }

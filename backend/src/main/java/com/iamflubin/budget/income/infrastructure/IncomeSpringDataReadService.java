@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -50,5 +51,14 @@ class IncomeSpringDataReadService implements IncomeReadService {
                 pageResult.isLast(),
                 pageResult.getContent()
         );
+    }
+
+    @Override
+    public List<Income> getIncomes(LocalDate from, LocalDate to) {
+        return repository
+                .findAll(IncomeSpecifications.betweenDates(from, to))
+                .stream()
+                .map(IncomeEntity::toDomain)
+                .toList();
     }
 }

@@ -1,20 +1,20 @@
-package com.iamflubin.budget.income.api;
+package com.iamflubin.budget.income.application;
 
 import com.iamflubin.budget.income.domain.Income;
+import com.iamflubin.budget.shared.domain.Money;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
 public record IncomeResponse(
         UUID id,
         String name,
-        BigDecimal amount,
+        Money amount,
         LocalDate date
 ) {
 
     public static IncomeResponse from(final Income income) {
         return new IncomeResponse(income.getId().value(), income.getName().value(),
-                income.getAmount().toBigDecimal(), income.getDate());
+                income.getAmount(), income.getDate());
     }
 }
