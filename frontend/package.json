@@ -24,6 +24,7 @@
     "@angular/router": "^21.1.0",
     "@spartan-ng/brain": "^0.0.1-alpha.647",
     "@tailwindcss/postcss": "^4.2.1",
+    "angular-auth-oidc-client": "21.0.1",
     "date-fns": "^4.1.0",
     "postcss": "^8.5.8",
     "rxjs": "~7.8.0",
