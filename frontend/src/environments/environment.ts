@@ -2,7 +2,7 @@ import { LogLevel } from 'angular-auth-oidc-client';
 
 export const environment = {
   production: true,
-  apiBaseUrl: 'https://example.com',
+  apiBaseUrl: 'https://example.com/api',
   oidc: {
     authority: 'https://example.com/realms/budget',
     clientId: 'angular-spa',

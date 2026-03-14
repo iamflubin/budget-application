@@ -9,9 +9,18 @@ export const routes: Routes = [
     redirectTo: 'dashboard',
   },
   {
-    path: 'dashboard',
-    component: Dashboard,
+    path: '',
     canActivate: [authGuard],
+    children: [
+      {
+        path: 'dashboard',
+        component: Dashboard,
+      },
+      {
+        path: 'incomes',
+        loadChildren: () => import('./income/income.routes').then((m) => m.INCOME_ROUTES),
+      },
+    ],
   },
   {
     path: '**',

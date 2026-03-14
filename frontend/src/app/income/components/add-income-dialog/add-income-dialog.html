@@ -1,0 +1,51 @@
+<hlm-dialog-header>
+  <h3 hlmDialogTitle>Add Income</h3>
+  <p hlmDialogDescription>Enter the details of your income.</p>
+</hlm-dialog-header>
+
+<form (ngSubmit)="addIncome()" [formGroup]="form" class="flex flex-col gap-4">
+  <hlm-form-field>
+    <label hlmLabel for="name">Name</label>
+    <input
+      formControlName="name"
+      id="name"
+      hlmInput
+      type="text"
+      placeholder="Salary, Freelance work, Side hustle…"
+      required
+    />
+    <hlm-hint>Give this income a name to identify it later.</hlm-hint>
+    @if (f.name.hasError('required') && f.name.touched) {
+      <hlm-error>Please enter an income name.</hlm-error>
+    }
+  </hlm-form-field>
+  <hlm-form-field>
+    <label hlmLabel for="amount">Amount</label>
+    <input formControlName="amount" id="amount" hlmInput type="number" min="1" required />
+    <hlm-hint>Enter the amount you received.</hlm-hint>
+    @if (f.amount.errors && f.amount.touched) {
+      <hlm-error>Please enter an amount.</hlm-error>
+    }
+  </hlm-form-field>
+  <div class="block space-y-2">
+    <label hlmLabel for="date">Date</label>
+    <hlm-date-picker
+      class="w-full"
+      buttonId="date"
+      formControlName="date"
+      [autoCloseOnSelect]="true"
+    >
+      <span>Select a date</span>
+    </hlm-date-picker>
+    <hlm-hint>The date you received this income.</hlm-hint>
+    @if (f.date.hasError('required') && f.date.touched) {
+      <hlm-error>Please select a date.</hlm-error>
+    }
+  </div>
+  <div class="flex justify-end gap-2">
+    <button (click)="onCancel()" type="button" variant="secondary" hlmBtn [disabled]="loading()">
+      Cancel
+    </button>
+    <app-loading-button [loading]="loading()" label="Add income" />
+  </div>
+</form>
